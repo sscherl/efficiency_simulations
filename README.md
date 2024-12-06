@@ -4,6 +4,8 @@
 
 - Goal: Test the readout mechanism of HV-CMOS MAPS in simulation to characterise their theoretical hit rate capabilities
 
+***Requires a chip simulation (typically run in Cadence xcelium) to process the hits***
+
 ## Versions
 
 ### v1.0
@@ -32,11 +34,11 @@ Generate the wanted input data from the **root files** containing physical simul
 
 Main part of the simulation! Use the `config.yaml` file to choose what type of simulation you want to run and to set all the paramters. These are partly explained in the comments of the `config.yaml` file and partly in my thesis. When you are happy with the settings you chose in the `config.yaml` file, run the simulation with `python 2_run_simulation_data.py`.
 
-Depending on whether you chose `trafo` or `comp` as your `sim` setting, the simulation will either _transform_ the raw data into the _input file_, meaning the format required for the MightyPix1 model, or _compare_ the already present input and output (what the MightyPix1 simulation gives you back when sending in data) files.
+Depending on whether you chose `trafo` or `comp` as your `sim` setting, the simulation will either _transform_ the raw data into the _input file_, meaning the format required for the chip simulation, or _compare_ the already present input and output (what the chip simulation gives you back when sending in data) files.
 
-When choosing `scifi` as your data type, the input data will be generated from the physical simulation data contained in the root files. These contain only 500 events, so careful with the limited statistics. When choosing `random` as your data type, poisson distributed data will be generated for the `rate` your specified.
+When choosing `scifi` as your data type, the input data will be generated from the physical simulation data contained in the root files (they are not in this repo as way too large!). These contain only 500 events, so careful with the limited statistics. When choosing `random` as your data type, poisson distributed data will be generated for the `rate` your specified.
 
-After you have created your _input file_ this can be sent through the MightyPix1 simulation, which is run using the Cadence tool xcelium. You will receive an output file from that simulation, which contains the data that MightyPix saw.
+After you have created your _input file_ this can be sent through the chip simulation, which is run using the Cadence tool xcelium. You will receive an output file from that simulation, which contains the data that MightyPix saw.
 
 Finally the _input_ and _output file_ can be _compared_, again running the `2_run_simulation_data.py` script, but setting the `sim` type in the `config.yaml` file to `comp`. You can choose to generate a log file of the analysis results by setting `mute` to `False`. This file then gives you info on how many hits the MightyPix1 simulation detected, and what's up with the wrongly detected hits. If you set the `save` or `show` option of `plots` to `True`, you can see how long it took to read the hits, and how the missing hits are distributed.
 
